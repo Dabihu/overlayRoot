@@ -32,9 +32,6 @@ sudo update-rc.d dphys-swapfile remove
 
 #### Disable overlayRoot entirely
 
-* To disable overlayRoot you can jumper the pin specified in the .conf file (default gpio 4) to ground.  
-
-* Alternatively edit your 
 `cmdline.txt` file and place `init=/sbin/overlayRoot.sh` on a separate line.  
  
 #### Remount

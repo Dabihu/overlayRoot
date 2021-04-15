@@ -9,7 +9,7 @@ fi
 echo "Updating apt database"
 apt update
 echo "installing dependencies"
-apt install -y wiringpi initramfs-tools
+apt install -y initramfs-tools
 
 # Is this a RootOverlay system?
 echo "Checking if rootOverlay is active"

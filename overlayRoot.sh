@@ -68,12 +68,6 @@ defaults(){
 
     LOG_FILE=/var/log/overlayRoot.log
 
-    #Jumper this pin to ground to disable rootOverlay
-    GPIO_DISABLE=4
-
-    # Jumper this pin to ground to boot to an emergency bash console
-    GPIO_CONSOLE=1
-
     #Read the selected configuration
     source /etc/overlayRoot.conf
 }
@@ -158,20 +152,6 @@ defaults(){
     run_protected_command "mount -t tmpfs inittemp /mnt"
     run_protected_command "modprobe overlay"
 
-    gpio mode $GPIO_DISABLE up  # activate pull up resistor  ground is just above pin 4
-    gpio mode $GPIO_CONSOLE up
-
-    if [[ $(gpio read $GPIO_DISABLE) = 0 ]]; then
-        log_info "Jumper on GPIO $GPIO_DISABLE overlayRoot -- will run /sbin/init directly"
-        exec /sbin/init
-        exit 0
-    elif [[ $(gpio read $GPIO_CONSOLE) = 0 ]]; then
-        log_info "Jumper on GPIO $GPIO_CONSOLE overlayRoot -- dropping straight to bash shell"
-        exec /bin/bash
-        exit 0
-    else
-        log_info "No jumper detected on $GPIO_CONSOLE or $GPIO_DISABLE-- continuing overlayRoot"
-    fi
     ######################### PHASE 1 DATA COLLECTION #############################################################
 
     # ROOT
